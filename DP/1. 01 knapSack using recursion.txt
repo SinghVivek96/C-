@@ -1,0 +1,41 @@
+//  0/1 knapSack using recursion.
+
+#include<iostream>
+#include<vector>
+using namespace std;
+
+//revursive knapSack function
+int knapSack(vector<vector<int>> arr, int weight, int array_length)
+{   //initializing base condition (smallest valid value)
+    
+    if( weight==0 || array_length==0 )
+        return 0;
+    if( arr[array_length-1][0] > weight )//0 index is for weight , 1 index is for the corrosponding value
+    {
+        return 0;
+    }
+    else
+    {
+        //either we can take the weight or we cannot, so we will find the max value for the same and return it.
+        return max(
+                    arr[array_length-1][1] + knapSack(arr, weight-arr[array_length-1][0], array_length-1),//taking the weight
+                    knapSack(arr, weight, array_length-1)//not taking the weight
+                    );
+    }
+}
+
+
+//driver 
+
+int main()
+{
+    //Initializing array
+    vector<vector<int>> arr;//0-> Weight 1-> Value
+    arr.push_back({10,60});//Pushing values into the 2D array.
+    arr.push_back({20,100});
+    arr.push_back({30,120});
+    int weight = 50;//knapSack max load
+    int array_length = arr.size();
+    cout << knapSack(arr,weight,array_length);
+    return 0;
+}
